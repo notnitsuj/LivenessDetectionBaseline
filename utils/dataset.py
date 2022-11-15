@@ -39,13 +39,14 @@ class LD(Dataset):
         img = Image.open(img_path)
         img = self.preprocess(img)
 
-        vidname = img_path.split('/')[-1].split('_')[0] + '.mp4'
+        vidname = img_path.split('/')[-1].split('_')[0] 
 
-        label = int(self.labels.loc[vidname]['liveness_score'])
+        label = int(self.labels.loc[vidname + '.mp4']['liveness_score'])
 
         return {
             'image': torch.as_tensor(img.copy()).float().contiguous(),
-            'label': torch.tensor(label)
+            'label': torch.tensor(label),
+            'vidname': torch.tensor(int(vidname))
         }
 
 class LD_test(Dataset):

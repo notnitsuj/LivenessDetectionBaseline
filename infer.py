@@ -10,7 +10,8 @@ from utils.dataset import LD_test
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Inference arguments for LD baseline model')
-    parser.add_argument('--data', '-d', type=str, default='data/public_test/public/images/', help='Path to folder containing test data')
+    parser.add_argument('--backbone', type=str, default='resnet50', help='Model name from timm to be used as backbone')
+    parser.add_argument('--data', '-d', type=str, default='data/public_test/images/', help='Path to folder containing test data')
     parser.add_argument('--checkpoint', '-c', type=str, default='checkpoints/baseline.pth', help='Path to checkpoint')
     parser.add_argument('--batch-size', '-b', type=int, default=64, help='Batch size')
 
@@ -20,7 +21,7 @@ if __name__ == '__main__':
     args = parse_args()
 
     # Initialize model
-    model = LD_Baseline()
+    model = LD_Baseline(args.backbone)
     model.load_state_dict(torch.load(args.checkpoint))
     model = model.cuda()
     model.eval()
@@ -48,6 +49,6 @@ if __name__ == '__main__':
     df = pd.DataFrame({'fname': outputs[:, 0], 'liveness_score': outputs[:, 1]})
     df = df.groupby('fname').mean().reset_index()
     df['fname'] = df['fname'].apply(lambda x: str(x) + '.mp4')
-    df['liveness_score'] = df['liveness_score'].apply(lambda x: round(x))
+    # df['liveness_score'] = df['liveness_score'].apply(lambda x: round(x))
 
     df.to_csv('predict.csv', index=False)
