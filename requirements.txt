@@ -1,0 +1,10 @@
+torch
+timm
+Pillow
+numpy
+pandas
+scipy
+sklearn
+opencv-python
+tqdm
+wandb
