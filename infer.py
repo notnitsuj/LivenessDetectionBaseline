@@ -14,6 +14,7 @@ def parse_args():
     parser.add_argument('--data', '-d', type=str, default='data/public_test/public/images/', help='Path to folder containing test data')
     parser.add_argument('--checkpoint', '-c', type=str, help='Path to checkpoint')
     parser.add_argument('--batch-size', '-b', type=int, default=64, help='Batch size')
+    parser.add_argument('--size', '-s', type=int, default=256, help='New image size')
 
     return parser.parse_args()
 
@@ -31,7 +32,7 @@ if __name__ == '__main__':
     model.eval()
 
     # Load data
-    test_set = LD_test(args.data)
+    test_set = LD_test(args.data, newsize=[args.size, args.size])
     test_loader = DataLoader(test_set, batch_size=args.batch_size, shuffle=False, num_workers=4, pin_memory=True)
 
     # Testing loop
