@@ -7,6 +7,9 @@ wandb/
 # Checkpoints
 checkpoints/
 
+# Predictions
+*.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
